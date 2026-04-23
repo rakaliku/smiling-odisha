@@ -101,26 +101,15 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Decorative pattachitra-style art panel */}
+          {/* Logo showcase */}
           <div className="relative animate-float hidden lg:block">
             <div className="relative aspect-square max-w-md mx-auto rounded-[2rem] bg-gradient-hero p-1 shadow-warm">
-              <div className="h-full w-full rounded-[calc(2rem-4px)] bg-card temple-pattern flex items-center justify-center relative overflow-hidden">
-                <svg viewBox="0 0 200 200" className="w-3/4 h-3/4">
-                  <defs>
-                    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
-                      <stop offset="0" stopColor="hsl(var(--primary))" />
-                      <stop offset="1" stopColor="hsl(var(--secondary))" />
-                    </linearGradient>
-                  </defs>
-                  {/* Stylized temple silhouette */}
-                  <path d="M100 20 L130 70 L160 80 L140 100 L150 160 L100 140 L50 160 L60 100 L40 80 L70 70 Z" fill="url(#g1)" opacity="0.9" />
-                  <circle cx="100" cy="100" r="15" fill="hsl(var(--background))" />
-                  <circle cx="100" cy="100" r="8" fill="hsl(var(--ink))" />
-                  {/* Petals */}
-                  {[0, 60, 120, 180, 240, 300].map((d) => (
-                    <ellipse key={d} cx="100" cy="55" rx="6" ry="14" fill="hsl(var(--secondary))" transform={`rotate(${d} 100 100)`} />
-                  ))}
-                </svg>
+              <div className="h-full w-full rounded-[calc(2rem-4px)] bg-card temple-pattern flex items-center justify-center relative overflow-hidden p-8">
+                <img
+                  src="/smiling-odisha-logo.jpeg"
+                  alt="Smiling Odisha logo"
+                  className="max-h-full max-w-full object-contain drop-shadow-xl"
+                />
               </div>
             </div>
             <div className="absolute -top-4 -right-4 px-4 py-2 rounded-full bg-secondary text-secondary-foreground font-semibold text-sm shadow-soft">

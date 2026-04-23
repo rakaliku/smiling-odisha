@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -18,8 +18,12 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-lg">
       <nav className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-hero shadow-warm">
-            <Sparkles className="h-5 w-5 text-primary-foreground" />
+          <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-background shadow-warm ring-2 ring-primary/15">
+            <img
+              src="/smiling-odisha-logo.jpeg"
+              alt="Smiling Odisha logo"
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className="leading-tight">
             <div className="font-display text-lg font-bold text-foreground">Smiling Odisha</div>

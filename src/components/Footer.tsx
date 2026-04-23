@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Mail, MapPin, Phone, Sparkles } from "lucide-react";
+import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -8,8 +8,12 @@ const Footer = () => {
       <div className="container relative py-14 grid gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-hero">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
+            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-background ring-2 ring-background/20">
+              <img
+                src="/smiling-odisha-logo.jpeg"
+                alt="Smiling Odisha logo"
+                className="h-full w-full object-cover"
+              />
             </div>
             <div>
               <div className="font-display text-xl font-bold">Smiling Odisha</div>

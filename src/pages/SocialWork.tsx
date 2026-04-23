@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import PhotoGallery from "@/components/gallery/PhotoGallery";
 import { toast } from "sonner";
 
 interface Initiative {
@@ -140,8 +141,11 @@ const SocialWork = () => {
         </div>
       </section>
 
+      {/* Photo Gallery */}
+      <PhotoGallery />
+
       {/* Volunteer Form */}
-      <section className="container pb-20">
+      <section className="container py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             <SectionHeading

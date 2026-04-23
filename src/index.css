@@ -1,96 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Sanskrit&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Odisha-inspired warm earthy palette */
+    --background: 39 50% 97%;
+    --foreground: 20 30% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 39 55% 98%;
+    --card-foreground: 20 30% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 39 55% 98%;
+    --popover-foreground: 20 30% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Pattachitra red */
+    --primary: 4 75% 42%;
+    --primary-foreground: 39 60% 97%;
+    --primary-glow: 12 80% 55%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Turmeric yellow */
+    --secondary: 42 90% 55%;
+    --secondary-foreground: 20 40% 12%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 39 35% 92%;
+    --muted-foreground: 20 15% 38%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Temple gold accent */
+    --accent: 35 75% 50%;
+    --accent-foreground: 20 40% 12%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 45%;
+    --destructive-foreground: 39 60% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 35 30% 82%;
+    --input: 35 30% 85%;
+    --ring: 4 75% 42%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Custom tokens */
+    --ink: 20 40% 10%;
+    --saffron: 28 90% 55%;
+    --gradient-hero: linear-gradient(135deg, hsl(4 75% 42%) 0%, hsl(28 90% 55%) 60%, hsl(42 90% 55%) 100%);
+    --gradient-warm: linear-gradient(180deg, hsl(39 50% 97%) 0%, hsl(35 60% 92%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(39 55% 98%) 0%, hsl(35 50% 94%) 100%);
+    --shadow-warm: 0 10px 40px -12px hsl(4 75% 42% / 0.25);
+    --shadow-soft: 0 4px 20px -6px hsl(20 40% 10% / 0.12);
+    --shadow-glow: 0 0 60px hsl(28 90% 55% / 0.35);
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 39 50% 97%;
+    --sidebar-foreground: 20 30% 12%;
+    --sidebar-primary: 4 75% 42%;
+    --sidebar-primary-foreground: 39 60% 97%;
+    --sidebar-accent: 39 35% 92%;
+    --sidebar-accent-foreground: 20 30% 12%;
+    --sidebar-border: 35 30% 82%;
+    --sidebar-ring: 4 75% 42%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 20 30% 8%;
+    --foreground: 39 50% 95%;
+    --card: 20 30% 11%;
+    --card-foreground: 39 50% 95%;
+    --popover: 20 30% 11%;
+    --popover-foreground: 39 50% 95%;
+    --primary: 12 80% 55%;
+    --primary-foreground: 20 30% 8%;
+    --secondary: 42 80% 50%;
+    --secondary-foreground: 20 30% 8%;
+    --muted: 20 20% 18%;
+    --muted-foreground: 39 20% 70%;
+    --accent: 35 75% 50%;
+    --accent-foreground: 20 30% 8%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 39 50% 95%;
+    --border: 20 20% 20%;
+    --input: 20 20% 20%;
+    --ring: 12 80% 55%;
   }
 }
 
@@ -100,6 +90,51 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  .bg-gradient-warm {
+    background: var(--gradient-warm);
+  }
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
+  }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  .text-gradient {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Pattachitra-inspired pattern */
+  .pattachitra-pattern {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(circle at 20% 20%, hsl(var(--primary) / 0.06) 0%, transparent 25%),
+      radial-gradient(circle at 80% 60%, hsl(var(--secondary) / 0.08) 0%, transparent 30%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%238B2E1F' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z'/%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .temple-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23B8860B' stroke-opacity='0.08' stroke-width='1.2'%3E%3Cpath d='M40 10 L50 30 L40 50 L30 30 Z'/%3E%3Cpath d='M10 40 L30 30 L50 30 L70 40'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
   }
 }

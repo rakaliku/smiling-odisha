@@ -1,31 +1,14 @@
 import { useMemo, useState } from "react";
-import { ImageIcon } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
+import { galleryPhotos } from "@/data/galleryPhotos";
 import GalleryCard, { type GalleryPhoto } from "./GalleryCard";
 import PhotoLightbox from "./PhotoLightbox";
 
 const PhotoGallery = () => {
   const [active, setActive] = useState<GalleryPhoto | null>(null);
 
-  const staticPhotos: GalleryPhoto[] = [
-    {
-      id: "1",
-      src: "/smiling_odisha_1.jpeg",
-      title: "Health Camp in Koraput",
-      description: "Free medical check-ups for 200 tribal families.",
-      createdAt: Date.now() - 1000 * 60 * 60 * 24 * 1,
-    },
-    {
-      id: "2",
-      src: "/smiling-odisha-logo.jpeg",
-      title: "School Library Inauguration",
-      description: "New reading corner for 150 rural students in Ganjam.",
-      createdAt: Date.now() - 1000 * 60 * 60 * 24 * 3,
-    },
-    ];
-
   const sorted = useMemo(
-    () => [...staticPhotos].sort((a, b) => b.createdAt - a.createdAt),
+    () => [...galleryPhotos].sort((a, b) => b.createdAt - a.createdAt),
     []
   );
 
@@ -48,7 +31,6 @@ const PhotoGallery = () => {
               key={photo.id}
               photo={photo}
               onClick={() => setActive(photo)}
-              onDelete={() => {}}
             />
           ))}
         </div>

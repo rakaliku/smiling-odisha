@@ -6,7 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import Career from "./pages/Career.tsx";
 import SocialWork from "./pages/SocialWork.tsx";
+import CommerceEducation from "./pages/CommerceEducation.tsx";
+import MedhaSanman from "./pages/MedhaSanman.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,10 +19,13 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/career" element={<Career />} />
           <Route path="/social-work" element={<SocialWork />} />
+          <Route path="/commerce-education" element={<CommerceEducation />} />
+          <Route path="/medha-sanman" element={<MedhaSanman />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

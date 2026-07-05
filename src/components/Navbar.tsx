@@ -8,6 +8,8 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "Career Counseling", path: "/career" },
   { name: "Social Work", path: "/social-work" },
+  { name: "Commerce Education", path: "/commerce-education" },
+  { name: "Medha Sanman", path: "/medha-sanman" },
 ];
 
 const Navbar = () => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Calculator, Landmark, TrendingUp, Coins, BarChart3, Globe, Briefcase, Users, GraduationCap, Award, BadgeCheck, HandCoins, Sparkles, Send, ChevronRight, Target, Eye } from "lucide-react";
+import { BookOpen, Calculator, Landmark, TrendingUp, Coins, BarChart3, Globe, Briefcase, Users, GraduationCap, Award, BadgeCheck, HandCoins, Sparkles, Send, ChevronRight, Target, Eye, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { submitForm } from "@/lib/submitForm";
 
 const courses = [
   { icon: BookOpen, title: "B.Com", desc: "Foundation in commerce, accounting, and business studies." },
@@ -32,22 +33,40 @@ const features = [
 
 interface FormState {
   name: string;
+  phone: string;
   email: string;
   course: string;
   message: string;
 }
 
 const CommerceEducation = () => {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", course: "", message: "" });
+  const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", course: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.course) {
+    if (!form.name || !form.phone || !form.email || !form.course) {
       toast.error("Please fill all required fields");
       return;
     }
-    toast.success("Enquiry submitted! Our team will contact you soon.");
-    setForm({ name: "", email: "", course: "", message: "" });
+    setSubmitting(true);
+    const result = await submitForm({
+      data: {
+        Name: form.name,
+        Phone: form.phone,
+        Email: form.email,
+        "Course of Interest": form.course,
+        Message: form.message,
+      },
+      subject: "New Commerce Education Enquiry",
+    });
+    setSubmitting(false);
+    if (result.success) {
+      toast.success("Enquiry submitted! Our team will contact you soon.");
+      setForm({ name: "", phone: "", email: "", course: "", message: "" });
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -187,9 +206,13 @@ const CommerceEducation = () => {
                     <Input id="cname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className="mt-1.5" />
                   </div>
                   <div>
-                    <Label htmlFor="cemail">Email *</Label>
-                    <Input id="cemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
+                    <Label htmlFor="cphone">Phone / WhatsApp *</Label>
+                    <Input id="cphone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
                   </div>
+                </div>
+                <div>
+                  <Label htmlFor="cemail">Email *</Label>
+                  <Input id="cemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
                 </div>
                 <div>
                   <Label htmlFor="ccourse">Course of Interest *</Label>
@@ -208,8 +231,9 @@ const CommerceEducation = () => {
                   <Label htmlFor="cmsg">Message</Label>
                   <Textarea id="cmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us about your educational goals..." className="mt-1.5" />
                 </div>
-                <Button type="submit" className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
-                  <Send className="h-4 w-4 mr-2" /> Submit Enquiry
+                <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
+                  {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                  {submitting ? "Submitting..." : "Submit Enquiry"}
                 </Button>
               </form>
             </CardContent>

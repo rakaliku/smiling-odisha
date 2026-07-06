@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Trophy, Star, Target, Lightbulb, GraduationCap, Medal, Award, BookOpen, Sparkles, Send, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Trophy, Star, Target, Lightbulb, GraduationCap, Medal, Award, BookOpen, Sparkles, Send, ChevronRight, CheckCircle2, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { submitForm } from "@/lib/submitForm";
 
 const objectives = [
   { icon: Star, title: "Encourage Academic Excellence", desc: "Inspire students to strive for the highest academic standards." },
@@ -27,6 +28,7 @@ const eligibility = [
 
 interface FormState {
   name: string;
+  phone: string;
   email: string;
   category: string;
   achievement: string;
@@ -34,16 +36,34 @@ interface FormState {
 }
 
 const MedhaSanman = () => {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", category: "", achievement: "", message: "" });
+  const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", category: "", achievement: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.category || !form.achievement) {
+    if (!form.name || !form.phone || !form.email || !form.category || !form.achievement) {
       toast.error("Please fill all required fields");
       return;
     }
-    toast.success("Nomination submitted! We'll review and get back to you soon.");
-    setForm({ name: "", email: "", category: "", achievement: "", message: "" });
+    setSubmitting(true);
+    const result = await submitForm({
+      data: {
+        "Student Name": form.name,
+        Phone: form.phone,
+        Email: form.email,
+        Category: form.category,
+        "Achievement Details": form.achievement,
+        Message: form.message,
+      },
+      subject: "New Medha Sanman Nomination",
+    });
+    setSubmitting(false);
+    if (result.success) {
+      toast.success("Nomination submitted! We'll review and get back to you soon.");
+      setForm({ name: "", phone: "", email: "", category: "", achievement: "", message: "" });
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -183,9 +203,13 @@ const MedhaSanman = () => {
                     <Input id="mname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Full name" className="mt-1.5" />
                   </div>
                   <div>
-                    <Label htmlFor="memail">Email *</Label>
-                    <Input id="memail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
+                    <Label htmlFor="mphone">Phone / WhatsApp *</Label>
+                    <Input id="mphone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
                   </div>
+                </div>
+                <div>
+                  <Label htmlFor="memail">Email *</Label>
+                  <Input id="memail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
                 </div>
                 <div>
                   <Label htmlFor="mcategory">Category *</Label>
@@ -209,8 +233,9 @@ const MedhaSanman = () => {
                   <Label htmlFor="mmsg">Additional Details</Label>
                   <Textarea id="mmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us more about the student's achievements..." className="mt-1.5" />
                 </div>
-                <Button type="submit" className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
-                  <Send className="h-4 w-4 mr-2" /> Submit Nomination
+                <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
+                  {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                  {submitting ? "Submitting..." : "Submit Nomination"}
                 </Button>
               </form>
             </CardContent>

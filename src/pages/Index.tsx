@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Briefcase, HeartHandshake, GraduationCap, Users, Quote, Star } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
+import CountUpStat from "@/components/CountUpStat";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -22,13 +23,13 @@ const services = [
     icon: GraduationCap,
     title: "Skill Development",
     desc: "Training programs that prepare youth for tomorrow's industries and opportunities.",
-    link: "/career",
+    link: "/career#services",
   },
   {
     icon: Users,
     title: "Community Outreach",
     desc: "Volunteer-led efforts that bring change to villages, schools and underserved areas.",
-    link: "/social-work",
+    link: "/social-work#initiatives",
   },
 ];
 
@@ -84,20 +85,11 @@ const Index = () => {
               </Button>
             </div>
             <div className="mt-10 flex items-center gap-6 text-sm">
-              <div>
-                <div className="font-display text-2xl font-bold text-primary">5,000+</div>
-                <div className="text-muted-foreground">Lives Touched</div>
-              </div>
+              <CountUpStat end={5000} suffix="+" label="Lives Touched" />
               <div className="h-10 w-px bg-border" />
-              <div>
-                <div className="font-display text-2xl font-bold text-primary">120+</div>
-                <div className="text-muted-foreground">Volunteers</div>
-              </div>
+              <CountUpStat end={120} suffix="+" label="Volunteers" />
               <div className="h-10 w-px bg-border" />
-              <div>
-                <div className="font-display text-2xl font-bold text-primary">30+</div>
-                <div className="text-muted-foreground">Districts</div>
-              </div>
+              <CountUpStat end={30} suffix="+" label="Districts" />
             </div>
           </div>
 
@@ -129,7 +121,7 @@ const Index = () => {
               align="left"
             />
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Smiling Odisha is a non-profit initiative founded by a collective of
+              Smilling Odisha is a non-profit initiative founded by a collective of
               educators, social workers and dreamers who believe that every child in
               Odisha deserves clarity in their career and dignity in their community.
             </p>
@@ -144,15 +136,14 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { num: "8+", label: "Years of Service" },
-              { num: "200+", label: "Workshops" },
-              { num: "45+", label: "Partner Schools" },
-              { num: "12K+", label: "Students Counseled" },
+              { num: 8, suffix: "+", label: "Years of Service" },
+              { num: 200, suffix: "+", label: "Workshops" },
+              { num: 45, suffix: "+", label: "Partner Schools" },
+              { num: 12000, suffix: "+", label: "Students Counseled" },
             ].map((s) => (
               <Card key={s.label} className="bg-gradient-card border-border/60 shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="font-display text-3xl md:text-4xl font-bold text-gradient">{s.num}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+                  <CountUpStat end={s.num} suffix={s.suffix} label={s.label} />
                 </CardContent>
               </Card>
             ))}

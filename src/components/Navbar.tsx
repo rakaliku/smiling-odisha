@@ -28,7 +28,7 @@ const Navbar = () => {
             />
           </div>
           <div className="leading-tight">
-            <div className="font-display text-lg font-bold text-foreground">Smiling Odisha</div>
+            <div className="font-display text-lg font-bold text-foreground">Smilling Odisha</div>
             <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Guidance · Service</div>
           </div>
         </Link>

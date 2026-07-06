@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Cpu, Building2, Stethoscope, Wrench, Code2, Briefcase, Send, GraduationCap, BookOpen, Landmark, Award, HandCoins, Lightbulb, BadgeCheck, Users, CalendarCheck, Sparkles, PhoneCall, ChevronRight, CheckCircle2, Star } from "lucide-react";
+import { Cpu, Building2, Stethoscope, Wrench, Code2, Briefcase, Send, GraduationCap, BookOpen, Landmark, Award, HandCoins, Lightbulb, BadgeCheck, Users, CalendarCheck, Sparkles, PhoneCall, ChevronRight, CheckCircle2, Star, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { submitForm } from "@/lib/submitForm";
 
 interface CareerPath {
   icon: typeof Cpu;
@@ -47,22 +48,40 @@ const whyChooseUs = [
 
 interface FormState {
   name: string;
+  phone: string;
   email: string;
   interest: string;
   message: string;
 }
 
 const Career = () => {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", interest: "", message: "" });
+  const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", interest: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.interest) {
+    if (!form.name || !form.phone || !form.email || !form.interest) {
       toast.error("Please fill all required fields");
       return;
     }
-    toast.success("Thank you! Our counselor will reach out within 48 hours.");
-    setForm({ name: "", email: "", interest: "", message: "" });
+    setSubmitting(true);
+    const result = await submitForm({
+      data: {
+        Name: form.name,
+        Phone: form.phone,
+        Email: form.email,
+        "Area of Interest": form.interest,
+        Message: form.message,
+      },
+      subject: "New Career Counseling Request",
+    });
+    setSubmitting(false);
+    if (result.success) {
+      toast.success("Thank you! Our counselor will reach out within 48 hours.");
+      setForm({ name: "", phone: "", email: "", interest: "", message: "" });
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -77,7 +96,7 @@ const Career = () => {
             Career Counselling &amp; <span className="text-gradient">Admission Guidance</span>
           </h1>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            Smiling Odisha is an Authorized Career Counselling Centre dedicated to helping students choose the right career path.
+            Smilling Odisha is an Authorized Career Counselling Centre dedicated to helping students choose the right career path.
             We provide expert guidance for higher education admissions, scholarships, and skill development.
           </p>
         </div>
@@ -164,7 +183,7 @@ const Career = () => {
       </section>
 
       {/* Our Services */}
-      <section className="container py-16 md:py-20">
+      <section id="services" className="container py-16 md:py-20">
         <SectionHeading
           eyebrow="What We Offer"
           title="Our Services"
@@ -242,9 +261,15 @@ const Career = () => {
           <Card className="bg-gradient-card border-border/60 shadow-warm">
             <CardContent className="p-7">
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input id="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className="mt-1.5" />
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Full Name *</Label>
+                    <Input id="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className="mt-1.5" />
+                  </div>
+                  <div>
+                    <Label htmlFor="phone">Phone / WhatsApp *</Label>
+                    <Input id="phone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="email">Email *</Label>
@@ -267,8 +292,9 @@ const Career = () => {
                   <Label htmlFor="message">Message</Label>
                   <Textarea id="message" rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us about your goals..." className="mt-1.5" />
                 </div>
-                <Button type="submit" className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
-                  <Send className="h-4 w-4 mr-2" /> Submit Request
+                <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
+                  {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                  {submitting ? "Submitting..." : "Submit Request"}
                 </Button>
               </form>
             </CardContent>

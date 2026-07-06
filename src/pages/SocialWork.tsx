@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { BookOpen, Sprout, HeartPulse, Target, Eye, Users, Send } from "lucide-react";
+import { BookOpen, Sprout, HeartPulse, Target, Eye, Users, Send, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
+import CountUpStat from "@/components/CountUpStat";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import PhotoGallery from "@/components/gallery/PhotoGallery";
 import { toast } from "sonner";
+import { submitForm } from "@/lib/submitForm";
 
 interface Initiative {
   icon: typeof BookOpen;
@@ -32,6 +34,7 @@ const stats = [
 
 interface FormState {
   name: string;
+  phone: string;
   email: string;
   city: string;
   area: string;
@@ -39,16 +42,34 @@ interface FormState {
 }
 
 const SocialWork = () => {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", city: "", area: "", message: "" });
+  const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", city: "", area: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.area) {
+    if (!form.name || !form.phone || !form.email || !form.area) {
       toast.error("Please fill all required fields");
       return;
     }
-    toast.success("Welcome to the family! We'll be in touch soon.");
-    setForm({ name: "", email: "", city: "", area: "", message: "" });
+    setSubmitting(true);
+    const result = await submitForm({
+      data: {
+        Name: form.name,
+        Phone: form.phone,
+        Email: form.email,
+        City: form.city,
+        "Area of Interest": form.area,
+        Message: form.message,
+      },
+      subject: "New Volunteer Application",
+    });
+    setSubmitting(false);
+    if (result.success) {
+      toast.success("Welcome to the family! We'll be in touch soon.");
+      setForm({ name: "", phone: "", email: "", city: "", area: "", message: "" });
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -92,7 +113,7 @@ const SocialWork = () => {
               </div>
               <h3 className="font-display text-2xl font-bold mb-3">Our Vision</h3>
               <p className="text-muted-foreground leading-relaxed">
-                A smiling Odisha where no child's future is limited by circumstance,
+                A Smilling Odisha where no child's future is limited by circumstance,
                 where tradition and progress walk hand in hand, and where service
                 shapes every smile.
               </p>
@@ -102,7 +123,7 @@ const SocialWork = () => {
       </section>
 
       {/* Initiatives */}
-      <section className="bg-gradient-warm py-20 relative">
+      <section id="initiatives" className="bg-gradient-warm py-20 relative">
         <div className="absolute inset-0 temple-pattern opacity-40" />
         <div className="container relative">
           <SectionHeading
@@ -130,11 +151,15 @@ const SocialWork = () => {
       <section className="container py-20">
         <SectionHeading eyebrow="Impact" title="Our Footprint, Your Story" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {stats.map((s) => (
+          {[
+            { num: 5000, suffix: "+", label: "Lives Touched" },
+            { num: 120, suffix: "+", label: "Active Volunteers" },
+            { num: 85, suffix: "", label: "Villages Reached" },
+            { num: 30, suffix: "+", label: "Districts" },
+          ].map((s) => (
             <Card key={s.label} className="bg-gradient-card border-border/60 text-center hover:shadow-warm transition-shadow">
               <CardContent className="p-7">
-                <div className="font-display text-4xl md:text-5xl font-bold text-gradient">{s.num}</div>
-                <div className="text-sm text-muted-foreground mt-2">{s.label}</div>
+                <CountUpStat end={s.num} suffix={s.suffix} label={s.label} />
               </CardContent>
             </Card>
           ))}
@@ -182,13 +207,19 @@ const SocialWork = () => {
                     <Input id="vname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1.5" />
                   </div>
                   <div>
+                    <Label htmlFor="vphone">Phone / WhatsApp *</Label>
+                    <Input id="vphone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="vemail">Email *</Label>
+                    <Input id="vemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1.5" />
+                  </div>
+                  <div>
                     <Label htmlFor="vcity">City</Label>
                     <Input id="vcity" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} placeholder="Bhubaneswar" className="mt-1.5" />
                   </div>
-                </div>
-                <div>
-                  <Label htmlFor="vemail">Email *</Label>
-                  <Input id="vemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1.5" />
                 </div>
                 <div>
                   <Label htmlFor="varea">Area of Interest *</Label>
@@ -208,8 +239,9 @@ const SocialWork = () => {
                   <Label htmlFor="vmsg">Why do you want to volunteer?</Label>
                   <Textarea id="vmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="mt-1.5" />
                 </div>
-                <Button type="submit" className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
-                  <Send className="h-4 w-4 mr-2" /> Sign Me Up
+                <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
+                  {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                  {submitting ? "Submitting..." : "Sign Me Up"}
                 </Button>
               </form>
             </CardContent>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,13 +8,21 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "Career Counseling", path: "/career" },
   { name: "Social Work", path: "/social-work" },
-  { name: "Commerce Education", path: "/commerce-education" },
+  { name: "Commerce Class", path: "/commerce-education" },
   { name: "Medha Sanman", path: "/medha-sanman" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent, path: string) => {
+    if (location.pathname === path) {
+      e.preventDefault();
+      window.scrollTo(0, 0);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-lg">
@@ -28,7 +36,7 @@ const Navbar = () => {
             />
           </div>
           <div className="leading-tight">
-            <div className="font-display text-lg font-bold text-foreground">Smiling Odisha</div>
+            <div className="font-display text-lg font-bold text-foreground">Smilling Odisha</div>
             <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Guidance · Service</div>
           </div>
         </Link>
@@ -40,6 +48,7 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={(e) => handleNavClick(e, item.path)}
                 className={cn(
                   "relative px-4 py-2 text-sm font-medium rounded-full transition-colors",
                   active ? "text-primary" : "text-foreground/70 hover:text-foreground"
@@ -76,7 +85,7 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={() => setOpen(false)}
+                onClick={(e) => { handleNavClick(e, item.path); setOpen(false); }}
                 className={cn(
                   "px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                   location.pathname === item.path

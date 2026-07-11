@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Calculator, Landmark, TrendingUp, Coins, BarChart3, Globe, Briefcase, Users, GraduationCap, Award, BadgeCheck, HandCoins, Sparkles, Send, ChevronRight, Target, Eye } from "lucide-react";
+import { BookOpen, Calculator, Landmark, TrendingUp, Coins, BarChart3, Globe, Briefcase, Users, GraduationCap, Award, BadgeCheck, HandCoins, Sparkles, Send, ChevronRight, Target, Eye, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { submitForm } from "@/lib/submitForm";
+import PhotoGallery from "@/components/gallery/PhotoGallery";
+import { commerceGalleryPhotos } from "@/data/commerceGalleryPhotos";
 
 const courses = [
   { icon: BookOpen, title: "B.Com", desc: "Foundation in commerce, accounting, and business studies." },
@@ -32,22 +35,40 @@ const features = [
 
 interface FormState {
   name: string;
+  phone: string;
   email: string;
   course: string;
   message: string;
 }
 
 const CommerceEducation = () => {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", course: "", message: "" });
+  const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", course: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.course) {
+    if (!form.name || !form.phone || !form.email || !form.course) {
       toast.error("Please fill all required fields");
       return;
     }
-    toast.success("Enquiry submitted! Our team will contact you soon.");
-    setForm({ name: "", email: "", course: "", message: "" });
+    setSubmitting(true);
+    const result = await submitForm({
+      data: {
+        Name: form.name,
+        Phone: form.phone,
+        Email: form.email,
+        "Course of Interest": form.course,
+        Message: form.message,
+      },
+      subject: "New Commerce Class Enquiry",
+    });
+    setSubmitting(false);
+    if (result.success) {
+      toast.success("Enquiry submitted! Our team will contact you soon.");
+      setForm({ name: "", phone: "", email: "", course: "", message: "" });
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -56,10 +77,10 @@ const CommerceEducation = () => {
       <section className="relative pattachitra-pattern py-20 md:py-28">
         <div className="container relative text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-5">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Commerce Education</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Commerce Class</span>
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight">
-            Commerce Education &amp; <span className="text-gradient">Professional Courses</span>
+            Commerce Class &amp; <span className="text-gradient">Professional Courses</span>
           </h1>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
             We help students build successful careers in commerce by providing quality education
@@ -97,7 +118,7 @@ const CommerceEducation = () => {
           <SectionHeading
             eyebrow="Why Us"
             title="Our Features"
-            subtitle="What makes our commerce education programs stand out."
+            subtitle="What makes our commerce class programs stand out."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
@@ -149,6 +170,14 @@ const CommerceEducation = () => {
         </div>
       </section>
 
+      {/* Photo Gallery */}
+      <PhotoGallery
+        photos={commerceGalleryPhotos}
+        eyebrow="Photo Gallery"
+        title="Classroom Moments"
+        subtitle="Glimpses from our commerce class sessions and events."
+      />
+
       {/* Enquiry Form */}
       <section id="enquire" className="container py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -187,9 +216,13 @@ const CommerceEducation = () => {
                     <Input id="cname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className="mt-1.5" />
                   </div>
                   <div>
-                    <Label htmlFor="cemail">Email *</Label>
-                    <Input id="cemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
+                    <Label htmlFor="cphone">Phone / WhatsApp *</Label>
+                    <Input id="cphone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
                   </div>
+                </div>
+                <div>
+                  <Label htmlFor="cemail">Email *</Label>
+                  <Input id="cemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
                 </div>
                 <div>
                   <Label htmlFor="ccourse">Course of Interest *</Label>
@@ -208,8 +241,9 @@ const CommerceEducation = () => {
                   <Label htmlFor="cmsg">Message</Label>
                   <Textarea id="cmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us about your educational goals..." className="mt-1.5" />
                 </div>
-                <Button type="submit" className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
-                  <Send className="h-4 w-4 mr-2" /> Submit Enquiry
+                <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
+                  {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                  {submitting ? "Submitting..." : "Submit Enquiry"}
                 </Button>
               </form>
             </CardContent>

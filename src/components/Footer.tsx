@@ -11,12 +11,12 @@ const Footer = () => {
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-background ring-2 ring-background/20">
               <img
                 src="/smiling-odisha-logo.jpeg"
-                alt="Smiling Odisha logo"
+                alt="Smilling Odisha logo"
                 className="h-full w-full object-cover"
               />
             </div>
             <div>
-              <div className="font-display text-xl font-bold">Smiling Odisha</div>
+              <div className="font-display text-xl font-bold">Smilling Odisha</div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-background/60">Guidance · Service</div>
             </div>
           </div>
@@ -43,7 +43,7 @@ const Footer = () => {
             <li><Link to="/" className="hover:text-secondary transition-colors">Home</Link></li>
             <li><Link to="/career" className="hover:text-secondary transition-colors">Career Counseling</Link></li>
             <li><Link to="/social-work" className="hover:text-secondary transition-colors">Social Work</Link></li>
-            <li><Link to="/commerce-education" className="hover:text-secondary transition-colors">Commerce Education</Link></li>
+            <li><Link to="/commerce-education" className="hover:text-secondary transition-colors">Commerce Class</Link></li>
             <li><Link to="/medha-sanman" className="hover:text-secondary transition-colors">Medha Sanman</Link></li>
           </ul>
         </div>
@@ -60,7 +60,7 @@ const Footer = () => {
       </div>
 
       <div className="relative border-t border-background/10 py-5 text-center text-xs text-background/50">
-        © {new Date().getFullYear()} Smiling Odisha · Made with ❤ for the people of Odisha
+        © {new Date().getFullYear()} Smilling Odisha · Made with ❤ for the people of Odisha
       </div>
     </footer>
   );

@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { submitForm } from "@/lib/submitForm";
+import PhotoGallery from "@/components/gallery/PhotoGallery";
+import { careerGalleryPhotos } from "@/data/careerGalleryPhotos";
 
 interface CareerPath {
   icon: typeof Cpu;
@@ -238,6 +240,14 @@ const Career = () => {
           </div>
         </div>
       </section>
+
+      {/* Photo Gallery */}
+      <PhotoGallery
+        photos={careerGalleryPhotos}
+        eyebrow="Photo Gallery"
+        title="Counselling in Action"
+        subtitle="Snapshots from our career counselling sessions and events."
+      />
 
       {/* Form */}
       <section id="book-session" className="container py-20">

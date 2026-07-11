@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { submitForm } from "@/lib/submitForm";
+import PhotoGallery from "@/components/gallery/PhotoGallery";
+import { commerceGalleryPhotos } from "@/data/commerceGalleryPhotos";
 
 const courses = [
   { icon: BookOpen, title: "B.Com", desc: "Foundation in commerce, accounting, and business studies." },
@@ -58,7 +60,7 @@ const CommerceEducation = () => {
         "Course of Interest": form.course,
         Message: form.message,
       },
-      subject: "New Commerce Education Enquiry",
+      subject: "New Commerce Class Enquiry",
     });
     setSubmitting(false);
     if (result.success) {
@@ -75,10 +77,10 @@ const CommerceEducation = () => {
       <section className="relative pattachitra-pattern py-20 md:py-28">
         <div className="container relative text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-5">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Commerce Education</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Commerce Class</span>
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight">
-            Commerce Education &amp; <span className="text-gradient">Professional Courses</span>
+            Commerce Class &amp; <span className="text-gradient">Professional Courses</span>
           </h1>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
             We help students build successful careers in commerce by providing quality education
@@ -116,7 +118,7 @@ const CommerceEducation = () => {
           <SectionHeading
             eyebrow="Why Us"
             title="Our Features"
-            subtitle="What makes our commerce education programs stand out."
+            subtitle="What makes our commerce class programs stand out."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
@@ -167,6 +169,14 @@ const CommerceEducation = () => {
           </div>
         </div>
       </section>
+
+      {/* Photo Gallery */}
+      <PhotoGallery
+        photos={commerceGalleryPhotos}
+        eyebrow="Photo Gallery"
+        title="Classroom Moments"
+        subtitle="Glimpses from our commerce class sessions and events."
+      />
 
       {/* Enquiry Form */}
       <section id="enquire" className="container py-20">

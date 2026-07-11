@@ -4,12 +4,24 @@ import { galleryPhotos } from "@/data/galleryPhotos";
 import GalleryCard, { type GalleryPhoto } from "./GalleryCard";
 import PhotoLightbox from "./PhotoLightbox";
 
-const PhotoGallery = () => {
+interface PhotoGalleryProps {
+  photos?: GalleryPhoto[];
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const PhotoGallery = ({
+  photos = galleryPhotos,
+  eyebrow = "Photo Gallery",
+  title = "Moments from the Field",
+  subtitle = "Our social work captured across Odisha.",
+}: PhotoGalleryProps) => {
   const [active, setActive] = useState<GalleryPhoto | null>(null);
 
   const sorted = useMemo(
-    () => [...galleryPhotos].sort((a, b) => b.createdAt - a.createdAt),
-    []
+    () => [...photos].sort((a, b) => b.createdAt - a.createdAt),
+    [photos]
   );
 
   return (
@@ -18,9 +30,9 @@ const PhotoGallery = () => {
       <div className="container relative">
         <div className="mb-10">
           <SectionHeading
-            eyebrow="Photo Gallery"
-            title="Moments from the Field"
-            subtitle="Our social work captured across Odisha."
+            eyebrow={eyebrow}
+            title={title}
+            subtitle={subtitle}
             align="left"
           />
         </div>

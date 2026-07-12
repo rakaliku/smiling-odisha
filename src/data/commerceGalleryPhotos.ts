@@ -99,12 +99,5 @@ export const commerceGalleryPhotos: GalleryPhoto[] = [
     description: "Prize Distribution",
     createdAt: new Date("2026-04-25").getTime(),
   },
-  {
-    id: "c15",
-    src: "/commerce-gallery/commerce_15.jpeg",
-    title: "Prize Distribution",
-    description: "Prize Distribution",
-    createdAt: new Date("2026-04-25").getTime(),
-  },
 ];
 

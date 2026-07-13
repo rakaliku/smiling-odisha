@@ -15,7 +15,7 @@ const WhatsAppButton = () => (
   >
     <MessageCircle className="h-7 w-7 fill-white stroke-white" />
     {/* Pulse ring */}
-    <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-25" />
+    <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-25 motion-reduce:hidden" />
     {/* Tooltip */}
     <span className="absolute right-full mr-3 whitespace-nowrap rounded-lg bg-foreground/90 px-3 py-1.5 text-xs font-medium text-background opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
       Chat on WhatsApp

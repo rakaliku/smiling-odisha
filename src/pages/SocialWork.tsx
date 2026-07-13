@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { BookOpen, Sprout, HeartPulse, Target, Eye, Users, Send, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
@@ -42,6 +43,7 @@ interface FormState {
 }
 
 const SocialWork = () => {
+  useDocumentTitle("Social Work & Community Service");
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", city: "", area: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 

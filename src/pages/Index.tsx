@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { ArrowRight, Briefcase, HeartHandshake, GraduationCap, Users, Quote, Star } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
@@ -52,6 +53,7 @@ const testimonials = [
 ];
 
 const Index = () => {
+  useDocumentTitle("");
   return (
     <Layout>
       {/* HERO */}
@@ -99,7 +101,7 @@ const Index = () => {
               <div className="h-full w-full rounded-[calc(2rem-4px)] bg-card temple-pattern flex items-center justify-center relative overflow-hidden p-8">
                 <img
                   src="/smiling-odisha-logo.jpeg"
-                  alt="Smiling Odisha logo"
+                  alt="Smilling Odisha logo"
                   className="max-h-full max-w-full object-contain drop-shadow-xl"
                 />
               </div>

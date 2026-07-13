@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { Cpu, Building2, Stethoscope, Wrench, Code2, Briefcase, Send, GraduationCap, BookOpen, Landmark, Award, HandCoins, Lightbulb, BadgeCheck, Users, CalendarCheck, Sparkles, PhoneCall, ChevronRight, CheckCircle2, Star, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
@@ -57,6 +58,7 @@ interface FormState {
 }
 
 const Career = () => {
+  useDocumentTitle("Career Counseling & Admission Guidance");
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", interest: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 

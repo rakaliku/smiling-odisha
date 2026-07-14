@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,14 +15,23 @@ const navItems = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const handleNavClick = (e: React.MouseEvent, path: string) => {
-    if (location.pathname === path) {
-      e.preventDefault();
-      window.scrollTo(0, 0);
-    }
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, left: 0 });
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-lg">
@@ -31,7 +40,7 @@ const Navbar = () => {
           <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-background shadow-warm ring-2 ring-primary/15">
             <img
               src="/smiling-odisha-logo.jpeg"
-              alt="Smiling Odisha logo"
+              alt="Smilling Odisha logo"
               className="h-full w-full object-cover"
             />
           </div>
@@ -48,7 +57,7 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={(e) => handleNavClick(e, item.path)}
+                onClick={scrollToTop}
                 className={cn(
                   "relative px-4 py-2 text-sm font-medium rounded-full transition-colors",
                   active ? "text-primary" : "text-foreground/70 hover:text-foreground"
@@ -85,7 +94,7 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={(e) => { handleNavClick(e, item.path); setOpen(false); }}
+                onClick={() => { scrollToTop(); setOpen(false); }}
                 className={cn(
                   "px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                   location.pathname === item.path

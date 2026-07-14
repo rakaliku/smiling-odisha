@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { Trophy, Star, Target, Lightbulb, GraduationCap, Medal, Award, BookOpen, Sparkles, Send, ChevronRight, CheckCircle2, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
@@ -36,6 +37,7 @@ interface FormState {
 }
 
 const MedhaSanman = () => {
+  useDocumentTitle("Medha Sanman — Honouring Excellence");
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", category: "", achievement: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 

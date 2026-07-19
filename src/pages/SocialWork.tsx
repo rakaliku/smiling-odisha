@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import PhotoGallery from "@/components/gallery/PhotoGallery";
 import { toast } from "sonner";
 import { submitForm } from "@/lib/submitForm";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface Initiative {
   icon: typeof BookOpen;
@@ -43,14 +44,15 @@ interface FormState {
 }
 
 const SocialWork = () => {
-  useDocumentTitle("Social Work & Community Service");
+  const { t } = useLanguage();
+  useDocumentTitle(t("Social Work & Community Service"));
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", city: "", area: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.phone || !form.email || !form.area) {
-      toast.error("Please fill all required fields");
+      toast.error(t("Please fill all required fields"));
       return;
     }
     setSubmitting(true);
@@ -67,10 +69,10 @@ const SocialWork = () => {
     });
     setSubmitting(false);
     if (result.success) {
-      toast.success("Welcome to the family! We'll be in touch soon.");
+      toast.success(t("Welcome to the family! We'll be in touch soon."));
       setForm({ name: "", phone: "", email: "", city: "", area: "", message: "" });
     } else {
-      toast.error(result.message);
+      toast.error(t(result.message));
     }
   };
 
@@ -80,14 +82,13 @@ const SocialWork = () => {
       <section className="relative pattachitra-pattern py-20 md:py-28">
         <div className="container relative text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-5">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Social Work</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">{t("Social Work")}</span>
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight">
-            Service is the <span className="text-gradient">Highest Prayer</span>
+            {t("Service is the Highest Prayer")}
           </h1>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            Together, we build the Odisha of tomorrow — through education, healthcare
-            and unwavering grassroots commitment.
+            {t("Together, we build the Odisha of tomorrow — through education, healthcare and unwavering grassroots commitment.")}
           </p>
         </div>
       </section>
@@ -100,11 +101,9 @@ const SocialWork = () => {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-hero mb-4">
                 <Target className="h-6 w-6 text-primary-foreground" />
               </div>
-              <h3 className="font-display text-2xl font-bold mb-3">Our Mission</h3>
+              <h3 className="font-display text-2xl font-bold mb-3">{t("Our Mission")}</h3>
               <p className="text-muted-foreground leading-relaxed">
-                To empower every village, every school and every family in Odisha with
-                the tools, knowledge and dignity they deserve — through compassionate
-                action and community-led change.
+                {t("To empower every village, every school and every family in Odisha with the tools, knowledge and dignity they deserve — through compassionate action and community-led change.")}
               </p>
             </CardContent>
           </Card>
@@ -113,11 +112,9 @@ const SocialWork = () => {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-hero mb-4">
                 <Eye className="h-6 w-6 text-primary-foreground" />
               </div>
-              <h3 className="font-display text-2xl font-bold mb-3">Our Vision</h3>
+              <h3 className="font-display text-2xl font-bold mb-3">{t("Our Vision")}</h3>
               <p className="text-muted-foreground leading-relaxed">
-                A Smilling Odisha where no child's future is limited by circumstance,
-                where tradition and progress walk hand in hand, and where service
-                shapes every smile.
+                {t("A Smilling Odisha where no child's future is limited by circumstance, where tradition and progress walk hand in hand, and where service shapes every smile.")}
               </p>
             </CardContent>
           </Card>
@@ -129,9 +126,9 @@ const SocialWork = () => {
         <div className="absolute inset-0 temple-pattern opacity-40" />
         <div className="container relative">
           <SectionHeading
-            eyebrow="Ongoing Programs"
-            title="Initiatives Making a Difference"
-            subtitle="Where action meets intention — across Odisha's heartlands."
+            eyebrow={t("Ongoing Programs")}
+            title={t("Initiatives Making a Difference")}
+            subtitle={t("Where action meets intention — across Odisha's heartlands.")}
           />
           <div className="grid md:grid-cols-3 gap-5">
             {initiatives.map((i) => (
@@ -140,8 +137,8 @@ const SocialWork = () => {
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-hero mb-5 group-hover:scale-110 transition-transform">
                     <i.icon className="h-7 w-7 text-primary-foreground" />
                   </div>
-                  <h3 className="font-display text-xl font-semibold mb-2">{i.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{i.desc}</p>
+                  <h3 className="font-display text-xl font-semibold mb-2">{t(i.title)}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{t(i.desc)}</p>
                 </CardContent>
               </Card>
             ))}
@@ -151,7 +148,7 @@ const SocialWork = () => {
 
       {/* Impact Stats */}
       <section className="container py-20">
-        <SectionHeading eyebrow="Impact" title="Our Footprint, Your Story" />
+        <SectionHeading eyebrow={t("Impact")} title={t("Our Footprint, Your Story")} />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {[
             { num: 5000, suffix: "+", label: "Lives Touched" },
@@ -161,7 +158,7 @@ const SocialWork = () => {
           ].map((s) => (
             <Card key={s.label} className="bg-gradient-card border-border/60 text-center hover:shadow-warm transition-shadow">
               <CardContent className="p-7">
-                <CountUpStat end={s.num} suffix={s.suffix} label={s.label} />
+                <CountUpStat end={s.num} suffix={s.suffix} label={t(s.label)} />
               </CardContent>
             </Card>
           ))}
@@ -169,16 +166,16 @@ const SocialWork = () => {
       </section>
 
       {/* Photo Gallery */}
-      <PhotoGallery />
+      <PhotoGallery display="carousel" />
 
       {/* Volunteer Form */}
       <section className="container py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             <SectionHeading
-              eyebrow="Join Us"
-              title="Become a Volunteer"
-              subtitle="Give a few hours a month — change a lifetime."
+              eyebrow={t("Join Us")}
+              title={t("Become a Volunteer")}
+              subtitle={t("Give a few hours a month — change a lifetime.")}
               align="left"
             />
             <div className="space-y-4">
@@ -192,8 +189,8 @@ const SocialWork = () => {
                     <b.icon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">{b.title}</div>
-                    <div className="text-sm text-muted-foreground">{b.desc}</div>
+                    <div className="font-semibold text-sm">{t(b.title)}</div>
+                    <div className="text-sm text-muted-foreground">{t(b.desc)}</div>
                   </div>
                 </div>
               ))}
@@ -205,45 +202,45 @@ const SocialWork = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="vname">Full Name *</Label>
+                    <Label htmlFor="vname">{t("Full Name *")}</Label>
                     <Input id="vname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1.5" />
                   </div>
                   <div>
-                    <Label htmlFor="vphone">Phone / WhatsApp *</Label>
+                    <Label htmlFor="vphone">{t("Phone / WhatsApp *")}</Label>
                     <Input id="vphone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
                   </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="vemail">Email *</Label>
+                    <Label htmlFor="vemail">{t("Email *")}</Label>
                     <Input id="vemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1.5" />
                   </div>
                   <div>
-                    <Label htmlFor="vcity">City</Label>
+                    <Label htmlFor="vcity">{t("City")}</Label>
                     <Input id="vcity" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} placeholder="Bhubaneswar" className="mt-1.5" />
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="varea">Area of Interest *</Label>
+                  <Label htmlFor="varea">{t("Area of Interest *")}</Label>
                   <Select value={form.area} onValueChange={(v) => setForm({ ...form, area: v })}>
                     <SelectTrigger id="varea" className="mt-1.5">
-                      <SelectValue placeholder="Where would you like to help?" />
+                      <SelectValue placeholder={t("Where would you like to help?")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="education">Education</SelectItem>
-                      <SelectItem value="health">Health Camps</SelectItem>
-                      <SelectItem value="rural">Rural Support</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      <SelectItem value="education">{t("Education")}</SelectItem>
+                      <SelectItem value="health">{t("Health Camps")}</SelectItem>
+                      <SelectItem value="rural">{t("Rural Support")}</SelectItem>
+                      <SelectItem value="other">{t("Other")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="vmsg">Why do you want to volunteer?</Label>
+                  <Label htmlFor="vmsg">{t("Why do you want to volunteer?")}</Label>
                   <Textarea id="vmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="mt-1.5" />
                 </div>
                 <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
                   {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
-                  {submitting ? "Submitting..." : "Sign Me Up"}
+                  {submitting ? t("Submitting...") : t("Sign Me Up")}
                 </Button>
               </form>
             </CardContent>

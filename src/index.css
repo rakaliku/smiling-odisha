@@ -1,10 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Sanskrit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Oriya:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Sanskrit&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html[data-language="or"] body {
+    font-family: "Noto Sans Oriya", "Poppins", sans-serif;
+  }
+
+  html[data-language="or"] .font-display {
+    font-family: "Noto Sans Oriya", "Playfair Display", serif;
+  }
+
   :root {
     /* Odisha-inspired warm earthy palette */
     --background: 39 50% 97%;

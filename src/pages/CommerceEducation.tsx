@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { submitForm } from "@/lib/submitForm";
 import PhotoGallery from "@/components/gallery/PhotoGallery";
 import { commerceGalleryPhotos } from "@/data/commerceGalleryPhotos";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const courses = [
   { icon: BookOpen, title: "B.Com", desc: "Foundation in commerce, accounting, and business studies." },
@@ -43,14 +44,15 @@ interface FormState {
 }
 
 const CommerceEducation = () => {
-  useDocumentTitle("Commerce Class & Professional Courses");
+  const { t } = useLanguage();
+  useDocumentTitle(t("Commerce Class & Professional Courses"));
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", course: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.phone || !form.email || !form.course) {
-      toast.error("Please fill all required fields");
+      toast.error(t("Please fill all required fields"));
       return;
     }
     setSubmitting(true);
@@ -66,10 +68,10 @@ const CommerceEducation = () => {
     });
     setSubmitting(false);
     if (result.success) {
-      toast.success("Enquiry submitted! Our team will contact you soon.");
+      toast.success(t("Enquiry submitted! Our team will contact you soon."));
       setForm({ name: "", phone: "", email: "", course: "", message: "" });
     } else {
-      toast.error(result.message);
+      toast.error(t(result.message));
     }
   };
 
@@ -79,14 +81,13 @@ const CommerceEducation = () => {
       <section className="relative pattachitra-pattern py-20 md:py-28">
         <div className="container relative text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-5">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Commerce Class</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">{t("Commerce Class")}</span>
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight">
-            Commerce Class &amp; <span className="text-gradient">Professional Courses</span>
+            {t("Commerce Class & Professional Courses")}
           </h1>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            We help students build successful careers in commerce by providing quality education
-            support and admission guidance for various professional courses.
+            {t("We help students build successful careers in commerce by providing quality education support and admission guidance for various professional courses.")}
           </p>
         </div>
       </section>
@@ -94,9 +95,9 @@ const CommerceEducation = () => {
       {/* Courses */}
       <section className="container py-16 md:py-20">
         <SectionHeading
-          eyebrow="Programs Offered"
-          title="Courses"
-          subtitle="Comprehensive commerce and professional course options for your career growth."
+          eyebrow={t("Programs Offered")}
+          title={t("Courses")}
+          subtitle={t("Comprehensive commerce and professional course options for your career growth.")}
         />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {courses.map((c) => (
@@ -105,8 +106,8 @@ const CommerceEducation = () => {
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-hero mx-auto mb-4 group-hover:scale-110 transition-transform shadow-warm">
                   <c.icon className="h-7 w-7 text-primary-foreground" />
                 </div>
-                <h3 className="font-display text-base font-semibold mb-1.5">{c.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{c.desc}</p>
+                <h3 className="font-display text-base font-semibold mb-1.5">{t(c.title)}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{t(c.desc)}</p>
               </CardContent>
             </Card>
           ))}
@@ -118,9 +119,9 @@ const CommerceEducation = () => {
         <div className="absolute inset-0 temple-pattern opacity-40" />
         <div className="container relative">
           <SectionHeading
-            eyebrow="Why Us"
-            title="Our Features"
-            subtitle="What makes our commerce class programs stand out."
+            eyebrow={t("Why Us")}
+            title={t("Our Features")}
+            subtitle={t("What makes our commerce class programs stand out.")}
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
@@ -129,8 +130,8 @@ const CommerceEducation = () => {
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-hero mb-5 group-hover:scale-110 transition-transform shadow-warm">
                     <f.icon className="h-7 w-7 text-primary-foreground" />
                   </div>
-                  <h3 className="font-display text-xl font-semibold mb-2">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                  <h3 className="font-display text-xl font-semibold mb-2">{t(f.title)}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{t(f.desc)}</p>
                 </CardContent>
               </Card>
             ))}
@@ -149,14 +150,13 @@ const CommerceEducation = () => {
           <div className="relative">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 mb-5">
               <Sparkles className="h-4 w-4 text-white" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-white">Our Mission</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-white">{t("Our Mission")}</span>
             </div>
             <h2 className="font-display text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
-              Prepare for <span className="underline decoration-wavy decoration-white/60 underline-offset-8">Success</span> in Business
+              {t("Prepare for Success in Business")}
             </h2>
             <p className="text-white/80 text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-              Our mission is to prepare students for successful careers in business, finance,
-              and entrepreneurship. Start your journey with us today.
+              {t("Our mission is to prepare students for successful careers in business, finance, and entrepreneurship. Start your journey with us today.")}
             </p>
             <a href="#enquire">
               <Button
@@ -164,7 +164,7 @@ const CommerceEducation = () => {
                 className="rounded-full bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all h-14 px-10 text-base font-semibold group"
               >
                 <GraduationCap className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
-                Enquire Now
+                {t("Enquire Now")}
                 <ChevronRight className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" />
               </Button>
             </a>
@@ -175,9 +175,10 @@ const CommerceEducation = () => {
       {/* Photo Gallery */}
       <PhotoGallery
         photos={commerceGalleryPhotos}
-        eyebrow="Photo Gallery"
-        title="Classroom Moments"
-        subtitle="Glimpses from our commerce class sessions and events."
+        display="carousel"
+        eyebrow={t("Photo Gallery")}
+        title={t("Classroom Moments")}
+        subtitle={t("Glimpses from our commerce class sessions and events.")}
       />
 
       {/* Enquiry Form */}
@@ -185,9 +186,9 @@ const CommerceEducation = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             <SectionHeading
-              eyebrow="Get in Touch"
-              title="Enquire About Admission"
-              subtitle="Interested in our commerce programs? Fill in your details and we'll guide you."
+              eyebrow={t("Get in Touch")}
+              title={t("Enquire About Admission")}
+              subtitle={t("Interested in our commerce programs? Fill in your details and we'll guide you.")}
               align="left"
             />
             <div className="space-y-4">
@@ -201,8 +202,8 @@ const CommerceEducation = () => {
                     <b.icon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">{b.title}</div>
-                    <div className="text-sm text-muted-foreground">{b.desc}</div>
+                    <div className="font-semibold text-sm">{t(b.title)}</div>
+                    <div className="text-sm text-muted-foreground">{t(b.desc)}</div>
                   </div>
                 </div>
               ))}
@@ -214,38 +215,38 @@ const CommerceEducation = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="cname">Full Name *</Label>
-                    <Input id="cname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className="mt-1.5" />
+                    <Label htmlFor="cname">{t("Full Name *")}</Label>
+                    <Input id="cname" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder={t("Your name")} className="mt-1.5" />
                   </div>
                   <div>
-                    <Label htmlFor="cphone">Phone / WhatsApp *</Label>
+                    <Label htmlFor="cphone">{t("Phone / WhatsApp *")}</Label>
                     <Input id="cphone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 9876543210" className="mt-1.5" />
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="cemail">Email *</Label>
+                  <Label htmlFor="cemail">{t("Email *")}</Label>
                   <Input id="cemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className="mt-1.5" />
                 </div>
                 <div>
-                  <Label htmlFor="ccourse">Course of Interest *</Label>
+                  <Label htmlFor="ccourse">{t("Course of Interest *")}</Label>
                   <Select value={form.course} onValueChange={(v) => setForm({ ...form, course: v })}>
                     <SelectTrigger id="ccourse" className="mt-1.5">
-                      <SelectValue placeholder="Select a course" />
+                      <SelectValue placeholder={t("Select a course")} />
                     </SelectTrigger>
                     <SelectContent>
                       {courses.map((c) => (
-                        <SelectItem key={c.title} value={c.title}>{c.title}</SelectItem>
+                        <SelectItem key={c.title} value={c.title}>{t(c.title)}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="cmsg">Message</Label>
-                  <Textarea id="cmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us about your educational goals..." className="mt-1.5" />
+                  <Label htmlFor="cmsg">{t("Message")}</Label>
+                  <Textarea id="cmsg" rows={3} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder={t("Tell us about your educational goals...")} className="mt-1.5" />
                 </div>
                 <Button type="submit" disabled={submitting} className="w-full rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-11">
                   {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
-                  {submitting ? "Submitting..." : "Submit Enquiry"}
+                  {submitting ? t("Submitting...") : t("Submit Enquiry")}
                 </Button>
               </form>
             </CardContent>

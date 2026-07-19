@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -15,6 +16,7 @@ const navItems = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { language, toggleLanguage, t } = useLanguage();
 
   const scrollToTop = () => window.scrollTo({ top: 0, left: 0 });
 
@@ -40,13 +42,13 @@ const Navbar = () => {
           <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-background shadow-warm ring-2 ring-primary/15">
             <img
               src="/smiling-odisha-logo.jpeg"
-              alt="Smilling Odisha logo"
+              alt={t("Smilling Odisha logo")}
               className="h-full w-full object-cover"
             />
           </div>
           <div className="leading-tight">
             <div className="font-display text-lg font-bold text-foreground">Smilling Odisha</div>
-            <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Guidance · Service</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{t("Guidance · Service")}</div>
           </div>
         </Link>
 
@@ -63,7 +65,7 @@ const Navbar = () => {
                   active ? "text-primary" : "text-foreground/70 hover:text-foreground"
                 )}
               >
-                {item.name}
+                {t(item.name)}
                 {active && (
                   <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-gradient-hero" />
                 )}
@@ -72,16 +74,28 @@ const Navbar = () => {
           })}
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={toggleLanguage}
+            aria-label={language === "en" ? t("Switch to Odia") : t("Switch to English")}
+            className="rounded-full border-primary/30 bg-background/70 px-3"
+          >
+            <span className={language === "en" ? "font-semibold text-primary" : "text-muted-foreground"}>EN</span>
+            <span className="mx-1.5 text-border">|</span>
+            <span className={language === "or" ? "font-semibold text-primary" : "text-muted-foreground"}>ଓଡ଼ିଆ</span>
+          </Button>
           <Button asChild variant="default" className="rounded-full bg-gradient-hero hover:opacity-90 shadow-warm">
-            <Link to="/career">Get Started</Link>
+            <Link to="/career">{t("Get Started")}</Link>
           </Button>
         </div>
 
         <button
           className="md:hidden p-2 text-foreground"
           onClick={() => setOpen(!open)}
-          aria-label="Menu"
+          aria-label={open ? t("Close menu") : t("Menu")}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
@@ -102,11 +116,22 @@ const Navbar = () => {
                     : "text-foreground/80 hover:bg-muted"
                 )}
               >
-                {item.name}
+                {t(item.name)}
               </Link>
             ))}
-            <Button asChild className="rounded-full bg-gradient-hero mt-2">
-              <Link to="/career" onClick={() => setOpen(false)}>Get Started</Link>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={toggleLanguage}
+              aria-label={language === "en" ? t("Switch to Odia") : t("Switch to English")}
+              className="rounded-full mt-2"
+            >
+              <span className={language === "en" ? "font-semibold text-primary" : "text-muted-foreground"}>EN</span>
+              <span className="mx-2 text-border">|</span>
+              <span className={language === "or" ? "font-semibold text-primary" : "text-muted-foreground"}>ଓଡ଼ିଆ</span>
+            </Button>
+            <Button asChild className="rounded-full bg-gradient-hero">
+              <Link to="/career" onClick={() => setOpen(false)}>{t("Get Started")}</Link>
             </Button>
           </div>
         </div>

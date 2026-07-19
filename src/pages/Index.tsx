@@ -6,6 +6,7 @@ import SectionHeading from "@/components/SectionHeading";
 import CountUpStat from "@/components/CountUpStat";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const services = [
   {
@@ -53,6 +54,7 @@ const testimonials = [
 ];
 
 const Index = () => {
+  const { t } = useLanguage();
   useDocumentTitle("");
   return (
     <Layout>
@@ -66,32 +68,31 @@ const Index = () => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
               <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-                Rooted in Odisha · Reaching the World
+                {t("Rooted in Odisha · Reaching the World")}
               </span>
             </div>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-foreground">
-              Empowering Odisha's <span className="text-gradient">Future</span> Through Guidance & Service
+              {t("Empowering Odisha's Future Through Guidance & Service")}
             </h1>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              From the temples of Puri to the classrooms of Bhubaneswar — we walk with
-              every dreamer, every doer, every soul ready to serve.
+              {t("From the temples of Puri to the classrooms of Bhubaneswar — we walk with every dreamer, every doer, every soul ready to serve.")}
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg" className="rounded-full bg-gradient-hero hover:opacity-90 shadow-warm h-12 px-7 text-base">
                 <Link to="/career">
-                  Get Career Guidance <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("Get Career Guidance")} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full border-2 border-primary/30 hover:bg-primary/5 h-12 px-7 text-base">
-                <Link to="/social-work">Join Social Work</Link>
+                <Link to="/social-work">{t("Join Social Work")}</Link>
               </Button>
             </div>
             <div className="mt-10 flex items-center gap-6 text-sm">
-              <CountUpStat end={5000} suffix="+" label="Lives Touched" />
+              <CountUpStat end={5000} suffix="+" label={t("Lives Touched")} />
               <div className="h-10 w-px bg-border" />
-              <CountUpStat end={120} suffix="+" label="Volunteers" />
+              <CountUpStat end={120} suffix="+" label={t("Volunteers")} />
               <div className="h-10 w-px bg-border" />
-              <CountUpStat end={30} suffix="+" label="Districts" />
+              <CountUpStat end={30} suffix="+" label={t("Districts")} />
             </div>
           </div>
 
@@ -101,13 +102,13 @@ const Index = () => {
               <div className="h-full w-full rounded-[calc(2rem-4px)] bg-card temple-pattern flex items-center justify-center relative overflow-hidden p-8">
                 <img
                   src="/smiling-odisha-logo.jpeg"
-                  alt="Smilling Odisha logo"
+                  alt={t("Smilling Odisha logo")}
                   className="max-h-full max-w-full object-contain drop-shadow-xl"
                 />
               </div>
             </div>
             <div className="absolute -top-4 -right-4 px-4 py-2 rounded-full bg-secondary text-secondary-foreground font-semibold text-sm shadow-soft">
-              ॐ Jai Jagannath
+              {t("ॐ Jai Jagannath")}
             </div>
           </div>
         </div>
@@ -118,22 +119,18 @@ const Index = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <SectionHeading
-              eyebrow="About Us"
-              title="A Movement Born from Odisha's Soul"
+              eyebrow={t("About Us")}
+              title={t("A Movement Born from Odisha's Soul")}
               align="left"
             />
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Smilling Odisha is a non-profit initiative founded by a collective of
-              educators, social workers and dreamers who believe that every child in
-              Odisha deserves clarity in their career and dignity in their community.
+              {t("Smilling Odisha is a non-profit initiative founded by a collective of educators, social workers and dreamers who believe that every child in Odisha deserves clarity in their career and dignity in their community.")}
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Inspired by the timeless art of Pattachitra and the unifying spirit of
-              Lord Jagannath, we blend tradition with modern tools to nurture the next
-              generation of Odias — confident, capable and compassionate.
+              {t("Inspired by the timeless art of Pattachitra and the unifying spirit of Lord Jagannath, we blend tradition with modern tools to nurture the next generation of Odias — confident, capable and compassionate.")}
             </p>
             <Button asChild variant="outline" className="rounded-full border-2">
-              <Link to="/social-work">Discover Our Mission <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <Link to="/social-work">{t("Discover Our Mission")} <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -145,7 +142,7 @@ const Index = () => {
             ].map((s) => (
               <Card key={s.label} className="bg-gradient-card border-border/60 shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <CountUpStat end={s.num} suffix={s.suffix} label={s.label} />
+                  <CountUpStat end={s.num} suffix={s.suffix} label={t(s.label)} />
                 </CardContent>
               </Card>
             ))}
@@ -158,9 +155,9 @@ const Index = () => {
         <div className="absolute inset-0 temple-pattern opacity-50" />
         <div className="container relative">
           <SectionHeading
-            eyebrow="What We Do"
-            title="Key Services"
-            subtitle="Two pillars, one mission — to uplift Odisha's youth and strengthen its communities."
+            eyebrow={t("What We Do")}
+            title={t("Key Services")}
+            subtitle={t("Two pillars, one mission — to uplift Odisha's youth and strengthen its communities.")}
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {services.map((s) => (
@@ -169,10 +166,10 @@ const Index = () => {
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-hero mb-4 group-hover:scale-110 transition-transform">
                     <s.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="font-display text-xl font-semibold mb-2">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
+                  <h3 className="font-display text-xl font-semibold mb-2">{t(s.title)}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{t(s.desc)}</p>
                   <Link to={s.link} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all">
-                    Learn more <ArrowRight className="h-3.5 w-3.5" />
+                    {t("Learn more")} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </CardContent>
               </Card>
@@ -184,13 +181,13 @@ const Index = () => {
       {/* TESTIMONIALS */}
       <section className="container py-20 md:py-28">
         <SectionHeading
-          eyebrow="Voices"
-          title="Stories from Our Community"
-          subtitle="Real people, real change — across Odisha."
+          eyebrow={t("Voices")}
+          title={t("Stories from Our Community")}
+          subtitle={t("Real people, real change — across Odisha.")}
         />
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <Card key={t.name} className="bg-gradient-card border-border/60 shadow-soft relative overflow-hidden">
+          {testimonials.map((testimonial) => (
+            <Card key={testimonial.name} className="bg-gradient-card border-border/60 shadow-soft relative overflow-hidden">
               <Quote className="absolute -top-2 -right-2 h-24 w-24 text-primary/5" />
               <CardContent className="p-7 relative">
                 <div className="flex gap-1 mb-4">
@@ -198,14 +195,14 @@ const Index = () => {
                     <Star key={i} className="h-4 w-4 fill-secondary text-secondary" />
                   ))}
                 </div>
-                <p className="text-foreground/85 italic leading-relaxed mb-6">"{t.text}"</p>
+                <p className="text-foreground/85 italic leading-relaxed mb-6">“{t(testimonial.text)}”</p>
                 <div className="flex items-center gap-3 pt-4 border-t border-border/60">
                   <div className="h-10 w-10 rounded-full bg-gradient-hero flex items-center justify-center text-primary-foreground font-semibold">
-                    {t.name[0]}
+                    {testimonial.name[0]}
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.role}</div>
+                    <div className="font-semibold text-sm">{testimonial.name}</div>
+                    <div className="text-xs text-muted-foreground">{t(testimonial.role)}</div>
                   </div>
                 </div>
               </CardContent>
@@ -220,17 +217,17 @@ const Index = () => {
           <div className="absolute inset-0 temple-pattern opacity-30" />
           <div className="relative">
             <h2 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground leading-tight">
-              Ready to make a difference?
+              {t("Ready to make a difference?")}
             </h2>
             <p className="mt-4 text-primary-foreground/90 max-w-xl mx-auto">
-              Whether you seek guidance or wish to give back — there's a place for you in our journey.
+              {t("Whether you seek guidance or wish to give back — there's a place for you in our journey.")}
             </p>
             <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="rounded-full bg-background text-foreground hover:bg-background/90 h-12 px-7">
-                <Link to="/career">Find Your Path</Link>
+                <Link to="/career">{t("Find Your Path")}</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full border-2 border-background/40 bg-transparent text-primary-foreground hover:bg-background/10 h-12 px-7">
-                <Link to="/social-work">Volunteer Today</Link>
+                <Link to="/social-work">{t("Volunteer Today")}</Link>
               </Button>
             </div>
           </div>

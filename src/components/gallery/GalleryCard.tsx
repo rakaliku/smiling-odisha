@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export interface GalleryPhoto {
   id: string;
@@ -14,6 +15,7 @@ interface GalleryCardProps {
 }
 
 const GalleryCard = ({ photo, onClick }: GalleryCardProps) => {
+  const { t } = useLanguage();
   return (
     <Card className="group overflow-hidden bg-card border-border/60 hover:shadow-warm transition-all">
       <button
@@ -23,7 +25,7 @@ const GalleryCard = ({ photo, onClick }: GalleryCardProps) => {
       >
         <img
           src={photo.src}
-          alt={photo.title}
+          alt={t(photo.title)}
           loading="lazy"
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/placeholder.svg";
@@ -34,9 +36,9 @@ const GalleryCard = ({ photo, onClick }: GalleryCardProps) => {
       </button>
       <CardContent className="p-4">
         <div className="min-w-0">
-          <h4 className="font-display font-semibold text-base truncate">{photo.title}</h4>
+          <h4 className="font-display font-semibold text-base truncate">{t(photo.title)}</h4>
           {photo.description && (
-            <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{photo.description}</p>
+            <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{t(photo.description)}</p>
           )}
         </div>
       </CardContent>
